@@ -1,0 +1,55 @@
+[gd_scene load_steps=5 format=3 uid="uid://8h8et3e5ly7e"]
+
+[ext_resource type="Texture2D" uid="uid://cs6k54gxn5gsh" path="res://assets/sprites/world_tileset.png" id="1_xxw3n"]
+[ext_resource type="FontFile" uid="uid://bvsgjoavaoqiu" path="res://assets/fonts/PixelOperator8.ttf" id="3_d2l3m"]
+
+[sub_resource type="GDScript" id="GDScript_cdw0s"]
+script/source = "extends Area2D
+
+@onready var label = $Label
+
+func _on_body_entered(body):
+	label.visible = true
+	
+
+func _on_body_exited(body):
+	label.visible = false
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sftgu"]
+size = Vector2(14, 14)
+
+[node name="Sign" type="Area2D"]
+collision_mask = 2
+script = SubResource("GDScript_cdw0s")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_xxw3n")
+region_enabled = true
+region_rect = Rect2(129, 50, 14, 14)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_sftgu")
+
+[node name="Label" type="Label" parent="."]
+visible = false
+visibility_layer = 2
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -18.0
+offset_top = -24.0
+offset_right = 17.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_d2l3m")
+theme_override_font_sizes/font_size = 8
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_entered" from="." to="Sprite2D" method="_on_sign_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
